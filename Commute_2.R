@@ -39,14 +39,30 @@ draw_from_sankey <- function(table_from){
 }
 
 draw_to_sankey <- function(table_to){
-  nodes <- unique(table_to[,3])
-  edges <- table_to[, c(3, 7, 9)]
-  edges$IDsource <- match(edges$From, nodes$From)-1
-  edges$IDtarget <- match(edges$To, nodes$From)-1
-  sankeyNetwork(Links=edges, Nodes=nodes, Source='IDsource',
-                Target = 'IDtarget', Value = 'Total_Commute', NodeID = 'From', units = 'Person(s)',
-                fontSize = 12, nodeWidth = 20, height = '300px', width = '100%')
+  table_to$INT <- paste(table_to$From, "(INT)")
+  sourceNodes <- sort(as.vector(unique(table_to$INT)))
+  targetNodes <- sort(as.vector(unique(table_to$To)))
+  nodes <- 1:length(c(sourceNodes, targetNodes))-1
+  names(nodes) <- c(sourceNodes, targetNodes)
+  
+  edges <- data.frame(source = nodes[as.vector(table_to$INT)],
+                      target = nodes[as.vector(table_to$To)],
+                      value = as.vector(table_to$Total_Commute))
+  nodes <- data.frame(names = c(sourceNodes, targetNodes))
+  sankeyNetwork(Links=edges, Nodes=nodes, Source='source',
+                Target = 'target', Value = 'value', NodeID = 'names', units = 'Person(s)',
+                fontSize = 10, nodeWidth = 20, height = '400px', width = '100%')
 }
+
+# draw_to_sankey <- function(table_to){
+#   nodes <- unique(table_to[,3])
+#   edges <- table_to[, c(3, 7, 9)]
+#   edges$IDsource <- match(edges$From, nodes$From)-1
+#   edges$IDtarget <- match(edges$To, nodes$From)-1
+#   sankeyNetwork(Links=edges, Nodes=nodes, Source='IDsource',
+#                 Target = 'IDtarget', Value = 'Total_Commute', NodeID = 'From', units = 'Person(s)',
+#                 fontSize = 12, nodeWidth = 20, height = '300px', width = '100%')
+# }
 
 
 draw_from_sankey(From_StJohns)
