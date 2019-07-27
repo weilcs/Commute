@@ -54,16 +54,6 @@ draw_to_sankey <- function(table_to){
                 fontSize = 10, nodeWidth = 20, height = '400px', width = '100%')
 }
 
-# draw_to_sankey <- function(table_to){
-#   nodes <- unique(table_to[,3])
-#   edges <- table_to[, c(3, 7, 9)]
-#   edges$IDsource <- match(edges$From, nodes$From)-1
-#   edges$IDtarget <- match(edges$To, nodes$From)-1
-#   sankeyNetwork(Links=edges, Nodes=nodes, Source='IDsource',
-#                 Target = 'IDtarget', Value = 'Total_Commute', NodeID = 'From', units = 'Person(s)',
-#                 fontSize = 12, nodeWidth = 20, height = '300px', width = '100%')
-# }
-
 
 draw_from_sankey(From_StJohns)
 draw_from_sankey(From_Paradise)
@@ -71,7 +61,7 @@ draw_from_sankey(From_MountPearl)
 draw_from_sankey(From_Torbay)
 draw_from_sankey(From_CBS)
 draw_from_sankey(From_PC)
-draw_to_sankey(To_StJohns)
+draw_to_sankey(To_StJohns)  # in the draw_to_sankey, frontsize = 6, height = '900px'
 draw_to_sankey(To_Paradise)
 draw_to_sankey(To_MountPearl)
 draw_to_sankey(To_Torbay)
