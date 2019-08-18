@@ -2,6 +2,7 @@ library(data.table)
 library(xlsx)
 library(dplyr)
 library(networkD3)
+library(plotly)
 rm(list=ls())
 
 df <- data.table(read.csv("Commute_Data_2016.csv",  header = T))
@@ -51,7 +52,8 @@ draw_to_sankey <- function(table_to){
   nodes <- data.frame(names = c(sourceNodes, targetNodes))
   sankeyNetwork(Links=edges, Nodes=nodes, Source='source',
                 Target = 'target', Value = 'value', NodeID = 'names', units = 'Person(s)',
-                fontSize = 10, nodeWidth = 20, height = '400px', width = '100%')
+                fontSize = 13, nodeWidth = 20, height = '1200px', width = '100%')
+
 }
 
 
@@ -61,9 +63,12 @@ draw_from_sankey(From_MountPearl)
 draw_from_sankey(From_Torbay)
 draw_from_sankey(From_CBS)
 draw_from_sankey(From_PC)
-draw_to_sankey(To_StJohns)  # in the draw_to_sankey, frontsize = 6, height = '900px'
+q <- draw_to_sankey(To_StJohns)  # in the draw_to_sankey, frontsize = 13, height = '1200px'
 draw_to_sankey(To_Paradise)
 draw_to_sankey(To_MountPearl)
 draw_to_sankey(To_Torbay)
 draw_to_sankey(To_CBS)
 draw_to_sankey(To_PC)
+
+htmlwidgets::saveWidget(q, "To_StJohns.html")
+
